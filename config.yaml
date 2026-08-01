@@ -1,0 +1,21 @@
+# Konfiguration der ueberwachten Stationen
+# type: UBAHN | SBAHN | TRAM | BUS
+# exclude_destinations: Liste von Zielstationen (destination), die NICHT angezeigt werden sollen.
+#   Alles was hier NICHT aufgefuehrt ist, wird angezeigt (auch neue/unbekannte Ziele).
+
+refresh_seconds: 60
+cache_seconds: 20
+departures_limit: 10
+
+stations:
+  - name: "Josephsburg, München"
+    type: "UBAHN"
+    exclude_destinations:
+      - "Messestadt Ost"
+      - "Messestadt West"
+
+  - name: "Berg am Laim, München"
+    type: "SBAHN"
+    exclude_destinations:
+      - "Erding"
+      - "Markt Schwaben"
