@@ -8,16 +8,16 @@
 </head>
 <body>
   <div style="max-width: 375px; margin: 0 auto; width: 100%;">
-    <h1>Abfahrten <span class="updated">Stand: {{ generated_at }}</span></h1>
+    <h1>Abfahrten <span class="updated">{{ generated_at }}</span></h1>
     {% if departures %}
     <table>
       {% for d in departures %}
       <tr>
         <td style="width:34px;"><span class="icon icon-{{ d.icon }}">{{ d.icon }}</span></td>
         <td>
-          <div style="display: flex; flex-wrap: wrap; align-items: baseline;">
+          <div style="display: flex; align-items: baseline; gap: 4px;">
             <span class="line">{{ d.line }}</span>
-            <span class="destination"> {{ d.destination }}</span>
+            <span class="destination">{{ d.destination }}</span>
           </div>
           <span class="station">{{ d.station }}</span>
         </td>
@@ -99,17 +99,18 @@ td {
 .line {
   font-weight: 700;
   font-size: 18px;
-  display: block;
-}
-.station {
-  font-size: 14px;
-  color: #6b7280;
 }
 .destination {
   font-size: 18px;
 }
+.station {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 2px;
+  display: block;
+}
 .time {
-  text-align: right;
+  text-align: center;
   white-space: nowrap;
   font-weight: 700;
   font-size: 20px;
@@ -151,7 +152,7 @@ td {
     margin: 4px 0 8px 4px;
   }
   .updated {
-    font-size: 12px;
+    font-size: 20px;
   }
   td {
     padding: 8px 4px;
