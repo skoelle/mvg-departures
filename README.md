@@ -102,3 +102,41 @@ https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:910&limit=10&trans
 | `/` | HTML-Ansicht, mobile-optimiert, Auto-Refresh alle 60s |
 | `/api/departures` | JSON-Liste aller gefilterten Abfahrten |
 | `/healthz` | Healthcheck fuer Docker/Watchtower |
+
+## Projektstruktur
+
+```
+mvg-departures/
+├── app/
+│   ├── main.py           # FastAPI-App, Endpunkte, Caching
+│   ├── config.py          # Config-Loader (YAML → Dataclasses)
+│   └── templates/
+│       └── index.html     # Jinja2-Template (Mobile-UI)
+├── config.yaml            # Stationskonfiguration
+├── requirements.txt       # Python-Dependencies
+├── Dockerfile
+└── .github/workflows/
+    └── build.yml          # CI/CD: Docker-Build + GHCR-Push
+```
+
+## Tech-Stack
+
+- **Runtime**: Python 3.12
+- **Framework**: FastAPI + Uvicorn
+- **Templating**: Jinja2 (server-seitig)
+- **MVG-API**: `mvg` Python-Client (oeffentlich, kein Auth noetig)
+- **Config**: YAML via `pyyaml`
+- **Container**: Docker (python:3.12-slim)
+
+## Caching
+
+- **Station-ID**: In-memory Dict, lifetime=Session (loest Station-Namen auf)
+- **Abfahrten**: In-memory Dict, TTL=`cache_seconds` (Default: 20s) pro Station+Typ
+- Keine Persistenz → Neustart = Cache-Verlust
+
+## Einschraenkungen
+
+- Kein WebSocket/Live-Updates (nur periodischer Meta-Refresh)
+- Keine Datenbank (nur In-Memory)
+- Kein Test-Framework vorhanden
+- Ein `config.yaml` pro Deployment (kein Multi-Tenancy)
