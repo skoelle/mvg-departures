@@ -13,6 +13,8 @@ Kompakter Abfahrtsmonitor fuer MVG U-Bahn und S-Bahn (Muenchen), primaer fuer mo
 - Anzeige von Linie, Ziel, Abfahrtszeit, Verspaetung und Stoerungsmeldungen
 - Visuelle Unterscheidung von U-Bahn (blau) und S-Bahn (gruen) per Icon
 
+![Screenshot der Webseite](docs/screenshot.png)
+
 ## Konfiguration
 
 Siehe `config.yaml`:
