@@ -114,9 +114,9 @@ def api_departures():
 def index(request: Request):
     departures = get_all_departures()
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "departures": departures,
             "refresh_seconds": config.refresh_seconds,
             "generated_at": datetime.now().strftime("%H:%M:%S"),
