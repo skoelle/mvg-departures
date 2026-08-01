@@ -86,6 +86,13 @@ services:
 Repo-Settings → Actions → General → Workflow permissions auf
 "Read and write permissions" stellen, sonst schlaegt der Push nach GHCR fehl.
 
+## mvg api
+
+https://www.mvg.de/api/bgw-pt/v3/locations?query=Josephsburg
+https://www.mvg.de/api/bgw-pt/v3/locations?query=Berg%20am
+https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:1220&limit=10&transportTypes=UBAHN
+https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:910&limit=10&transportTypes=SBAHN
+
 ## Endpunkte
 
 | Route | Beschreibung |
