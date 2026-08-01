@@ -1,6 +1,6 @@
 services:
   mvg-departures:
-    image: ghcr.io/skoelle/mvg-departures:latest
+    image: ghcr.io/skoelle/mvg-departures:latest@sha256:c93ca797aa5dea84611a44d9463dd557816b664d30cdc7e956335f3e7628dcb0
     container_name: mvg-departures
     ports:
       - "8000:8000"
