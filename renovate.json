@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:pinDigests",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration",
+    ":pinDevDependencies",
+    "abandonments:recommended",
+    "security:minimumReleaseAgeNpm",
+    ":dependencyDashboard"
+  ],
+  "automergeStrategy": "squash",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "{{depName}}",
+      "commitMessagePrefix": "fix(deps)"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "groupName": "major-{{depName}}"
+    }
+  ]
+}
