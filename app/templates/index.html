@@ -15,8 +15,10 @@
       <tr>
         <td style="width:34px;"><span class="icon icon-{{ d.icon }}">{{ d.icon }}</span></td>
         <td>
-          <span class="line">{{ d.line }}</span>
-          <span class="destination">{{ d.destination }}</span>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline;">
+            <span class="line">{{ d.line }}</span>
+            <span class="destination"> {{ d.destination }}</span>
+          </div>
           <span class="station">{{ d.station }}</span>
         </td>
         <td class="time">
