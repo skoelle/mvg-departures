@@ -1,4 +1,4 @@
-"""Config-Loader fuer die Stationsliste aus config.yaml."""
+"""Config-Loader für die Stationsliste aus config.yaml."""
 import os
 import yaml
 from dataclasses import dataclass, field

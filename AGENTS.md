@@ -49,7 +49,7 @@ Kein Linter konfiguriert. Bei Bedarf: `ruff check app/` oder `black app/`
 
 1. **Ein-Datei-App**: `main.py` enthält alle Endpunkte und Logik → bewusst simpel gehalten
 2. **Keine DB**: Alles In-Memory → Neustart = Cache-Verlust (akzeptabel)
-3. **Exclude-Filter**: Whitelist-Logik (alles anzeigen AUSSER exclude_destinations)
+3. **Exclude-Filter**: Blacklist-Logik (alles anzeigen AUSSER exclude_destinations)
 4. **Template-Rendering**: Server-seitig via Jinja2, kein Frontend-Framework
 5. **Config-Pfad**: `CONFIG_PATH` Env-Var oder `config.yaml` als Fallback
 
@@ -70,7 +70,7 @@ Kein Linter konfiguriert. Bei Bedarf: `ruff check app/` oder `black app/`
 ## Sicherheit
 
 - Keine Secrets im Code
-- Config.yaml kann sensible Stationsnamen enthalten → Volume-Mount, nicht ins Image
+- Config.yaml kann sensitive Stationsnamen enthalten → in Produktion als Read-Only-Volume-Mount überschreiben; das Image enthält nur eine Default-Config
 - GHCR-Token nur in CI, nie im Repo
 
 ## Deployment-Hinweise

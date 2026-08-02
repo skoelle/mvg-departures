@@ -53,18 +53,20 @@ uvicorn app.main:app --reload
 
 ```bash
 docker build -t mvg-departures .
-docker run -p 8000:8000 -v $(pwd)/config.yaml:/app/config.yaml mvg-departures
+docker run -p 8000:8000 -e TZ=Europe/Berlin -v $(pwd)/config.yaml:/app/config.yaml mvg-departures
 ```
 
-## Deployment (Beispiel docker-compose, nicht im Repo)
+## Deployment
+
+Siehe `docker-compose.yml` im Repo als Referenz. Beispiel (Owner anpassen):
 
 ```yaml
 services:
   mvg-departures:
-    image: ghcr.io/<github-user>/mvg-departures:latest
+    image: ghcr.io/skoelle/mvg-departures:latest
     container_name: mvg-departures
     ports:
-      - "8090:8000"
+      - "8000:8000"
     volumes:
       - ./config.yaml:/app/config.yaml:ro
     environment:
@@ -108,25 +110,32 @@ https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:910&limit=10&trans
 ```
 mvg-departures/
 ├── app/
-│   ├── main.py           # FastAPI-App, Endpunkte, Caching
+│   ├── __init__.py
+│   ├── main.py            # FastAPI-App, Endpunkte, Caching
 │   ├── config.py          # Config-Loader (YAML → Dataclasses)
 │   └── templates/
 │       └── index.html     # Jinja2-Template (Mobile-UI)
 ├── config.yaml            # Stationskonfiguration
+├── docker-compose.yml     # Deployment-Beispiel
 ├── requirements.txt       # Python-Dependencies
 ├── Dockerfile
+├── .dockerignore
+├── .gitignore
+├── AGENTS.md
+├── SPEC.md
+├── renovate.json
 └── .github/workflows/
     └── build.yml          # CI/CD: Docker-Build + GHCR-Push
 ```
 
 ## Tech-Stack
 
-- **Runtime**: Python 3.12
+- **Runtime**: Python 3.14
 - **Framework**: FastAPI + Uvicorn
 - **Templating**: Jinja2 (server-seitig)
 - **MVG-API**: `mvg` Python-Client (oeffentlich, kein Auth noetig)
 - **Config**: YAML via `pyyaml`
-- **Container**: Docker (python:3.12-slim)
+- **Container**: Docker (python:3.14-slim)
 
 ## Caching
 

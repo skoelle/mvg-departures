@@ -16,7 +16,7 @@ mvg-departures/
 │       └── index.html     # Jinja2-Template (mobile HTML-Ansicht)
 ├── config.yaml            # Stationskonfiguration
 ├── requirements.txt       # Python-Dependencies
-├── Dockerfile             # Multi-Stage Build (python:3.12-slim)
+├── Dockerfile             # Single-Stage Build (python:3.14-slim)
 ├── docker-compose.yml     # Deployment-Beispiel
 └── .github/workflows/
     └── build.yml          # CI/CD: Docker-Build + GHCR-Push
@@ -26,13 +26,13 @@ mvg-departures/
 
 | Komponente | Technologie |
 |---|---|
-| Runtime | Python 3.12 |
+| Runtime | Python 3.14 |
 | Web-Framework | FastAPI |
 | Templating | Jinja2 |
 | API-Client | `mvg` (PyPI) |
 | Config | YAML (`pyyaml`) |
 | Server | Uvicorn |
-| Container | Docker (python:3.12-slim) |
+| Container | Docker (python:3.14-slim) |
 | CI/CD | GitHub Actions → GHCR |
 
 ## 4. Datenfluss
