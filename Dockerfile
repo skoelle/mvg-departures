@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 COPY config.yaml ./config.yaml
+COPY LICENSE ./LICENSE
 
 ENV CONFIG_PATH=/app/config.yaml
 ENV TZ=Europe/Berlin
