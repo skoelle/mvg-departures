@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stefan Koelle (https://stefankoelle.de) - MIT License
 """MVG Departures Monitor - FastAPI App."""
 import time
 import logging

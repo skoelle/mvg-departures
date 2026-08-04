@@ -149,3 +149,7 @@ mvg-departures/
 - Keine Datenbank (nur In-Memory)
 - Kein Test-Framework vorhanden
 - Ein `config.yaml` pro Deployment (kein Multi-Tenancy)
+
+## Lizenz
+
+MIT License - Copyright (c) 2026 Stefan Koelle (https://stefankoelle.de)

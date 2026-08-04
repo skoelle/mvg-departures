@@ -1,3 +1,4 @@
+# Copyright (c) 2026 Stefan Koelle (https://stefankoelle.de) - MIT License
 """Config-Loader für die Stationsliste aus config.yaml."""
 import os
 import yaml
