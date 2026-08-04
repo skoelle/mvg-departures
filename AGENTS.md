@@ -15,6 +15,7 @@ MVG Departures Monitor: FastAPI-App für Münchner U-/S-Bahn-Abfahrtsanzeige. Mo
 | `requirements.txt` | Python-Dependencies |
 | `Dockerfile` | Container-Build |
 | `.github/workflows/build.yml` | CI/CD |
+| `LICENSE` | MIT-Lizenz |
 
 ## Code-Conventions
 
@@ -24,6 +25,7 @@ MVG Departures Monitor: FastAPI-App für Münchner U-/S-Bahn-Abfahrtsanzeige. Mo
 - **Logging**: `logging.getLogger("mvg-departures")`
 - **Naming**: snake_case (Python), camelCase (HTML/CSS-Klassen)
 - **Keine Comments**: Nur wenn explizit angefordert
+- **Lizenz**: MIT — Copyright-Header in allen Quelldateien (`# Copyright (c) 2026 Stefan Koelle (https://stefankoelle.de) - MIT License`), HTML-Kommentar im Template
 
 ## Entwicklung
 
