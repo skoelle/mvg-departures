@@ -7,6 +7,9 @@ Kompakter Abfahrtsmonitor fuer MVG U-Bahn und S-Bahn (Muenchen), primaer fuer mo
 - Konfigurierbare Stationsliste (`config.yaml`) mit Typ (UBAHN/SBAHN/TRAM/BUS)
 - Ausschluss-Filter pro Station: nur unerwuenschte Zielrichtungen werden ausgeblendet,
   neue/unbekannte Ziele werden automatisch weiter angezeigt
+- Profile zur Gruppierung von Stationen (z.B. "Hinfahrt" und "Rückfahrt")
+  - Klickbare Kacheln zum Profilwechsel (nur bei >1 Profil)
+  - URL-Param `?profile=<name>` + Auto-Refresh
 - Zwei Endpunkte:
   - `/` — mobile-optimierte HTML-Ansicht mit Auto-Refresh (alle 60s per Meta-Refresh)
   - `/api/departures` — JSON-Ausgabe derselben Daten
@@ -24,18 +27,24 @@ refresh_seconds: 60
 cache_seconds: 20
 departures_limit: 10
 
-stations:
-  - name: "Josephsburg, München"
-    type: "UBAHN"
-    exclude_destinations:
-      - "Messestadt Ost"
-      - "Messestadt West"
-
-  - name: "Berg am Laim, München"
-    type: "SBAHN"
-    exclude_destinations:
-      - "Erding"
-      - "Markt Schwaben"
+profiles:
+  - name: "Hinfahrt"
+    stations:
+      - name: "Josephsburg, München"
+        type: "UBAHN"
+        exclude_destinations:
+          - "Messestadt Ost"
+          - "Messestadt West"
+      - name: "Berg am Laim, München"
+        type: "SBAHN"
+        exclude_destinations:
+          - "Erding"
+          - "Markt Schwaben"
+  - name: "Rückfahrt"
+    stations:
+      - name: "Grosshadern, München"
+        type: "UBAHN"
+        exclude_destinations: []
 ```
 
 `exclude_destinations` filtert per exaktem `destination`-Stringvergleich. Alles was
@@ -102,7 +111,9 @@ https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:910&limit=10&trans
 | Route | Beschreibung |
 |---|---|
 | `/` | HTML-Ansicht, mobile-optimiert, Auto-Refresh alle 60s |
-| `/api/departures` | JSON-Liste aller gefilterten Abfahrten |
+| `/?profile=<name>` | HTML-Ansicht für ein bestimmtes Profil |
+| `/api/departures` | JSON-Liste aller gefilterten Abfahrten (erstes Profil als Fallback) |
+| `/api/departures?profile=<name>` | JSON-Liste für ein bestimmtes Profil |
 | `/healthz` | Healthcheck fuer Docker/Watchtower |
 
 ## Projektstruktur

@@ -42,7 +42,9 @@ config.yaml
     ↓
 load_config() → AppConfig (Dataclass)
     ↓
-Für jede Station:
+Profile auswählen (?profile= param oder erstes Profil)
+    ↓
+Für jede Station im aktiven Profil:
     resolve_station_id(name) → station_id (mit Memory-Cache)
     ↓
 MvgApi(station_id).departures(limit, transport_types)
@@ -61,7 +63,9 @@ Response: JSON oder HTML-Template
 | Route | Methode | Beschreibung |
 |---|---|---|
 | `/` | GET | Mobile HTML-Ansicht, Auto-Refresh alle 60s |
-| `/api/departures` | GET | JSON-Liste aller gefilterten Abfahrten |
+| `/?profile=<name>` | GET | HTML-Ansicht für ein bestimmtes Profil |
+| `/api/departures` | GET | JSON-Liste aller gefilterten Abfahrten (erstes Profil als Fallback) |
+| `/api/departures?profile=<name>` | GET | JSON-Liste für ein bestimmtes Profil |
 | `/healthz` | GET | Healthcheck (`{"status": "ok"}`) |
 
 ## 6. Konfiguration (`config.yaml`)
@@ -71,11 +75,18 @@ refresh_seconds: 60          # Meta-Refresh-Intervall (HTML)
 cache_seconds: 20            # API-Cache pro Station
 departures_limit: 10         # Max. Abfahrten pro Station
 
-stations:
-  - name: "Station Name, München"
-    type: "UBAHN"            # UBAHN | SBAHN | TRAM | BUS
-    exclude_destinations:    # Exakter Stringvergleich
-      - "Zielstation"
+profiles:
+  - name: "Hinfahrt"         # Profilname (einzigartig)
+    stations:
+      - name: "Station Name, München"
+        type: "UBAHN"        # UBAHN | SBAHN | TRAM | BUS
+        exclude_destinations: # Exakter Stringvergleich
+          - "Zielstation"
+  - name: "Rückfahrt"
+    stations:
+      - name: "Andere Station"
+        type: "SBAHN"
+        exclude_destinations: []
 ```
 
 ### Filter-Logik
@@ -93,6 +104,7 @@ stations:
 ## 8. UI
 
 - Dunkles Theme (`#111417` Background)
+- Profil-Kacheln (nur bei >1 Profil): 50% Breite, Basis `#1e242b`, aktiv `#005ca9` (MVG-Blau)
 - Farbliche Unterscheidung: U-Bahn (blau `#005ca9`), S-Bahn (grün `#00933b`), Tram (rot `#e2001a`), Bus (grau `#55545a`)
 - Anzeige: Linie, Ziel, Abfahrtszeit, Verspätung (gelb/rot), Entfall, Störungsmeldungen
 - Responsive, für Smartphone-First optimiert

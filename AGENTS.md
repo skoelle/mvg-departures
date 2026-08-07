@@ -11,7 +11,7 @@ MVG Departures Monitor: FastAPI-App für Münchner U-/S-Bahn-Abfahrtsanzeige. Mo
 | `app/main.py` | FastAPI-App, Endpunkte, Caching, MVG-API-Aufrufe |
 | `app/config.py` | Config-Loader: YAML → Dataclasses |
 | `app/templates/index.html` | Jinja2-HTML-Template (Mobile-UI) |
-| `config.yaml` | Stationskonfiguration (User-Input) |
+| `config.yaml` | Profil- und Stationskonfiguration (User-Input) |
 | `requirements.txt` | Python-Dependencies |
 | `Dockerfile` | Container-Build |
 | `.github/workflows/build.yml` | CI/CD |
@@ -59,6 +59,9 @@ Kein Linter konfiguriert. Bei Bedarf: `ruff check app/` oder `black app/`
 
 ### Neue Station hinzufügen
 → Nur `config.yaml` editieren, kein Code nötig
+
+### Neues Profil hinzufügen
+→ `config.yaml` unter `profiles:` neuen Eintrag mit `name:` und `stations:` ergänzen
 
 ### Neuen Transporttyp hinzufügen
 → `TYPE_MAP` und `ICON_MAP` in `main.py` erweitern, CSS-Klasse `.icon-X` in `index.html` hinzufügen
