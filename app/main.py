@@ -12,7 +12,7 @@ from fastapi.staticfiles import StaticFiles
 
 from mvg import MvgApi, TransportType
 
-from app.config import load_config, StationConfig
+from app.config import load_config, StationConfig, ProfileConfig
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("mvg-departures")
@@ -98,27 +98,40 @@ def fetch_departures_for_station(station_cfg: StationConfig) -> List[Dict[str, A
     return result
 
 
-def get_all_departures() -> List[Dict[str, Any]]:
+def get_profile_by_name(profile_name: str) -> ProfileConfig:
+    for profile in config.profiles:
+        if profile.name == profile_name:
+            return profile
+    return config.profiles[0] if config.profiles else None
+
+
+def get_departures_for_profile(profile: ProfileConfig) -> List[Dict[str, Any]]:
     all_deps: List[Dict[str, Any]] = []
-    for station_cfg in config.stations:
+    for station_cfg in profile.stations:
         all_deps.extend(fetch_departures_for_station(station_cfg))
     all_deps.sort(key=lambda d: d["time_epoch"] or 0)
     return all_deps
 
 
 @app.get("/api/departures")
-def api_departures():
-    return JSONResponse(content={"departures": get_all_departures()})
+def api_departures(profile: str = None):
+    active_profile = get_profile_by_name(profile) if profile else config.profiles[0] if config.profiles else None
+    if not active_profile:
+        return JSONResponse(content={"departures": []})
+    return JSONResponse(content={"departures": get_departures_for_profile(active_profile)})
 
 
 @app.get("/")
-def index(request: Request):
-    departures = get_all_departures()
+def index(request: Request, profile: str = None):
+    active_profile = get_profile_by_name(profile) if profile else config.profiles[0] if config.profiles else None
+    departures = get_departures_for_profile(active_profile) if active_profile else []
     return templates.TemplateResponse(
         request,
         "index.html",
         {
             "departures": departures,
+            "profiles": config.profiles,
+            "active_profile": active_profile,
             "refresh_seconds": config.refresh_seconds,
             "generated_at": datetime.now().strftime("%H:%M:%S"),
         },

@@ -14,11 +14,17 @@ class StationConfig:
 
 
 @dataclass
+class ProfileConfig:
+    name: str
+    stations: List[StationConfig] = field(default_factory=list)
+
+
+@dataclass
 class AppConfig:
     refresh_seconds: int
     cache_seconds: int
     departures_limit: int
-    stations: List[StationConfig]
+    profiles: List[ProfileConfig]
 
 
 def load_config(path: str = None) -> AppConfig:
@@ -26,18 +32,21 @@ def load_config(path: str = None) -> AppConfig:
     with open(path, "r", encoding="utf-8") as f:
         raw = yaml.safe_load(f)
 
-    stations = [
-        StationConfig(
-            name=s["name"],
-            type=s["type"].upper(),
-            exclude_destinations=s.get("exclude_destinations", []) or [],
-        )
-        for s in raw.get("stations", [])
-    ]
+    profiles = []
+    for p in raw.get("profiles", []):
+        stations = [
+            StationConfig(
+                name=s["name"],
+                type=s["type"].upper(),
+                exclude_destinations=s.get("exclude_destinations", []) or [],
+            )
+            for s in p.get("stations", [])
+        ]
+        profiles.append(ProfileConfig(name=p["name"], stations=stations))
 
     return AppConfig(
         refresh_seconds=int(raw.get("refresh_seconds", 60)),
         cache_seconds=int(raw.get("cache_seconds", 20)),
         departures_limit=int(raw.get("departures_limit", 10)),
-        stations=stations,
+        profiles=profiles,
     )

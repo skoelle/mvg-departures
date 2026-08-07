@@ -7,15 +7,18 @@ refresh_seconds: 60
 cache_seconds: 20
 departures_limit: 10
 
-stations:
-  - name: "Josephsburg, München"
-    type: "UBAHN"
-    exclude_destinations:
-      - "Messestadt Ost"
-      - "Messestadt West"
-
-  - name: "Berg am Laim, München"
-    type: "SBAHN"
-    exclude_destinations:
-      - "Erding"
-      - "Markt Schwaben"
+profiles:
+  - name: "Hinfahrt"
+    stations:
+      - name: "Josephsburg, München"
+        type: "UBAHN"
+        exclude_destinations:
+          - "Messestadt Ost"
+          - "Messestadt West"
+      - name: "Berg am Laim, München"
+        type: "SBAHN"
+        exclude_destinations:
+          - "Erding"
+          - "Markt Schwaben"
+  - name: "Rückfahrt"
+    stations: []
