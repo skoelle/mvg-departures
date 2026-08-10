@@ -3,23 +3,49 @@
   "extends": [
     "config:recommended",
     "docker:pinDigests",
-    "helpers:pinGitHubActionDigests",
-    ":configMigration",
-    ":pinDevDependencies",
-    "abandonments:recommended",
-    "security:minimumReleaseAgeNpm",
-    ":dependencyDashboard"
+    "helpers:pinGitHubActionDigests"
   ],
+  "schedule": ["before 6am on monday"],
+  "timezone": "Europe/Berlin",
   "automergeStrategy": "squash",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "{{depName}}",
-      "commitMessagePrefix": "fix(deps)"
+      "description": "GitHub Actions - grouped automerge",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "commitMessagePrefix": "ci",
+      "automerge": true
     },
     {
+      "description": "Docker Digests - automerge (security patches)",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchUpdateTypes": ["digest"],
+      "commitMessagePrefix": "docker",
+      "automerge": true
+    },
+    {
+      "description": "Docker Major/Minor - manual review",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "docker-base-images",
+      "commitMessagePrefix": "docker",
+      "automerge": false
+    },
+    {
+      "description": "Python minor/patch - automerge",
+      "matchManagers": ["pip_requirements"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "commitMessagePrefix": "fix(deps)",
+      "automerge": true
+    },
+    {
+      "description": "Python major - no automerge, label",
+      "matchManagers": ["pip_requirements"],
       "matchUpdateTypes": ["major"],
-      "groupName": "major-{{depName}}"
+      "commitMessagePrefix": "chore(deps)",
+      "automerge": false,
+      "labels": ["major-update"]
     }
-  ]
+  ],
+  "ignoreDeps": ["node", "express", "node-cron", "nodemailer", "actions/setup-node"]
 }
