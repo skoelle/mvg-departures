@@ -8,6 +8,7 @@
   "schedule": ["before 6am on monday"],
   "timezone": "Europe/Berlin",
   "automergeStrategy": "squash",
+  "ignorePaths": ["docker-compose.yml"],
   "packageRules": [
     {
       "description": "GitHub Actions - grouped automerge",
@@ -18,14 +19,14 @@
     },
     {
       "description": "Docker Digests - automerge (security patches)",
-      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchManagers": ["dockerfile"],
       "matchUpdateTypes": ["digest"],
       "commitMessagePrefix": "docker",
       "automerge": true
     },
     {
       "description": "Docker Major/Minor - manual review",
-      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchManagers": ["dockerfile"],
       "matchUpdateTypes": ["major", "minor"],
       "groupName": "docker-base-images",
       "commitMessagePrefix": "docker",
