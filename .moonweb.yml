@@ -1,0 +1,6 @@
+title: "MVG Departures"
+emoji: "🚇"
+category: code
+subcategory: "Smart Home Apps"
+status: active
+stack: [Python, FastAPI, Uvicorn, Jinja2]
